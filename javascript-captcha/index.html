@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="app, landing, corporate, Creative, Html Template, Template">
+    <meta name="author" content="web-themes">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- title -->
+    <title>JavaScript Captcha!</title>
+
+    <!-- favicon -->
+    <!-- <link href="img/favicon.png" type="image/png" rel="icon"> -->
+
+    <!-- all css here -->
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body onload="createCaptcha()">
+  
+
+    <div class="captcha_wrapper">
+        <form onsubmit="validateCaptcha()">
+            <div id="captcha"></div>
+            <input type="text" placeholder="Captcha" id="cpatchaTextBox">
+            <button type="sumbit">Submit</button>
+        </form>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        
+        var code;
+        function createCaptcha() {
+            document.getElementById('captcha').innerHTML = "";
+            var charsArray = "0123456789abcdefghijklmnopqrstubwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            var lengthOtp = 6;
+            var captcha = [];
+
+            for (var i = 0; i < lengthOtp; i++) {
+                var index = Math.floor(Math.random() * charsArray.length + 1);
+                if (captcha.indexOf(charsArray[index]) == -1) 
+                    captcha.push(charsArray[index]);
+                else i--;
+            }
+
+            var canv = document.createElement("canvas");
+            canv.id = "captcha";
+            canv.width = 100;
+            canv.height = 50;
+            var ctx = canv.getContext("2d");
+            ctx.font = "25px Georgia";
+            ctx.strokeText(captcha.join(""), 0, 30);
+            code = captcha.join("");
+            document.getElementById("captcha").appendChild(canv);
+        }
+
+        function validateCaptcha() {
+            event.preventDefault();
+            debugger
+            if (document.getElementById("cpatchaTextBox").value == code) {
+                alert("Valid Captcha");
+            }else {
+                alert("Invalid Captcha. try Again");
+                createCaptcha();
+            }
+        }
+
+    </script>
+</body>
+</html>
